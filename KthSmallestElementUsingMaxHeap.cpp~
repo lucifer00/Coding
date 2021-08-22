@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+void maxHeapify(int a[], int n, int pos) {
+	int l = 2*pos+1;
+	int r = 2*pos+2;
+	int largest = pos;
+	if(l<n&&a[largest]<a[l])largest = l;
+	if(r<n&&a[largest]<a[r])largest = r;
+	if(largest!=pos) {
+		int t = a[largest];
+		a[largest] = a[pos];
+		a[pos]= t;
+		maxHeapify(a, n, largest);
+	}
+}
+int main() {
+	int n,k;
+	cin>>n>>k;
+	int a[n];
+	for(int i=0;i<n;i++) {
+		cin>>a[i];
+	}
+	for(int i=(k/2)-1;i>=0;i--) {
+		maxHeapify(a, k, i);
+	}
+	for(int i = k/2;i<n;i++) {
+		if(a[i]<a[k/2]){a[0]=a[i];maxHeapify(a, k, 0);}
+	}
+	for(int i=0;i<n;i++) {
+		cout<<a[i]<<" ";
+	}
+	cout<<"\n"<<a[0];
+	return 0;
+}
